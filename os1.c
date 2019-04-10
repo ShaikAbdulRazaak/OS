@@ -4,27 +4,41 @@
 #include<stdlib.h>
 #include<semaphore.h>
 void *fun();
-int i,n,x;
+int i,n;
+static int winner = 0;
 
 int main()
 {
- pthread_t t[10000];
- printf("\nEnter number of tickets");
- scanf("%d",&n);
- if(n<=0)
-	{
-		printf("\n\n::::  Invalid Value Of Number Of Tickets  ::::\n");
-		exit(0);
-	}
- for(i=1;i<=n;i++)
- {
- 	pthread_create(&t[i],NULL,&fun,NULL);
- 	pthread_join(t[i],NULL);
- }
- 	printf("The ticket number generated randomly is %d\n",x);
-	printf("%d\n",x);
+ int a[50];
+ for(int i=0;i<50;i++)
+{
+ winner = ((rand()%5-1)+ 1);
+ printf("The ticket number generated randomly is %d\n",winner);
+ pthread_t t[10];
+ a[i] = winner;
+ pthread_create(&t[winner],NULL,&fun,NULL);
+ pthread_join(t[winner],NULL);
+}
+printf("Lottery in order : ");
+for (int j=0;j<50;j++)
+	printf("%d  ",a[j]);
+
 }
 void *fun()
 	{
-		printf("%d",x);
+		printf("%d\n",winner);
+		sleep(.2);
 	}
+
+/*
+ pthread_create(&t1,NULL,&fun,NULL);
+ pthread_join(t1,NULL);
+ pthread_create(&t2,NULL,&fun,NULL);
+ pthread_join(t2,NULL);
+ pthread_create(&t3,NULL,&fun,NULL);
+ pthread_join(t3,NULL);
+ pthread_create(&t4,NULL,&fun,NULL);
+ pthread_join(t4,NULL);
+ pthread_create(&t5,NULL,&fun,NULL);
+ pthread_join(t5,NULL);*/
+
