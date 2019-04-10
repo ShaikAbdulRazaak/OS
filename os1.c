@@ -12,21 +12,21 @@ int main()
  int a[50];
  for(int i=0;i<50;i++)
 {
- winner = ((rand()%5-1)+ 1);
- printf("The ticket number generated randomly is %d\n",winner);
- pthread_t t[10];
+ winner = ((rand()%50-1)+ 1);
+ printf("\nThe ticket number generated randomly is %d\n",winner);
+ pthread_t t[100];
  a[i] = winner;
  pthread_create(&t[winner],NULL,&fun,NULL);
  pthread_join(t[winner],NULL);
 }
-printf("Lottery in order : ");
+printf("\nLottery in order : ");
 for (int j=0;j<50;j++)
 	printf("%d  ",a[j]);
 
 }
 void *fun()
 	{
-		printf("%d\n",winner);
+		printf("\nThis ticket %d the winner and is in critical section for 20 milliseconds\n",winner);
 		sleep(.2);
 	}
 
